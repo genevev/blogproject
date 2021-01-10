@@ -1,0 +1,44 @@
+{
+  "name": "blogproject",
+  "version": "1.0.0",
+  "description": "blog project",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/genevev/blogproject.git"
+  },
+  "keywords": [
+    "api",
+    "node.js",
+    "mysql",
+    "sequelize"
+  ],
+  "author": "Genevieve",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/genevev/blogproject/issues"
+  },
+  "homepage": "https://github.com/genevev/blogproject#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "express": "^4.17.1",
+    "jest": "^26.6.3",
+    "joi": "^17.3.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.10",
+    "@babel/core": "^7.12.10",
+    "@babel/node": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "eslint": "^7.17.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.2.1"
+  }
+}
