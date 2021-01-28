@@ -4,7 +4,8 @@
   "description": "blog project",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "nodemon --exec babel-node server.js"
   },
   "repository": {
     "type": "git",
@@ -24,9 +25,15 @@
   "homepage": "https://github.com/genevev/blogproject#readme",
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jest": "^26.6.3",
-    "joi": "^17.3.0"
+    "joi": "^17.3.0",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
@@ -39,6 +46,8 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.3.1",
     "nodemon": "^2.0.7",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "prettier-config": "^1.0.0",
+    "sequelize-cli": "^6.2.0"
   }
 }
