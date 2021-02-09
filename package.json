@@ -4,8 +4,12 @@
   "description": "blog project",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "start": "nodemon --exec babel-node server.js"
+    "test": "jest NODE_ENV=test",
+    "start": "node dist/index.js NODE_EN=production",
+    "dev": "nodemon --exec babel-node src/index.js NODE_ENV=development",
+    "build": "babel src -d dist",
+    "migrate": "sequelize db:migrate --env development",
+    "db:migrate": "./node_modules/.bin/sequelize db:migrate"
   },
   "repository": {
     "type": "git",
