@@ -3,14 +3,13 @@ import GenericRes from '../helpers/response';
 import Passcode from '../helpers/utils';
 import Jwt from '../middlewares/jwt';
 class UserController {  
-    static async signup(req, res) { 
+    static async signup(req, res, next) { 
         const { username, email, password } = req.body;
         const userEx = await UserService.userExist(username);
         //check whether the user exist
         if (userEx) { 
             GenericRes.error(res, 400, 'user already exist');
-            return next()
-
+            return next();
         }
         try {
             //hash and remove user's password
@@ -19,20 +18,21 @@ class UserController {
             const createUser = { username, email, password: hashedPasscode };
 
             // save the user in the db
-            const creatModel = await UserService.createUser(creatUser);
+            const saveUser = await UserService.createUser(createUser);
 
             // Get the user's Id registered
+            const userExi = req.body.username;
+            const getId = await UserService.getId(userExi);
             const id = getId.id;
 
             // remove the passwd
             delete req.body.password;
 
-            // generate jwt
-            const token = await Jwt.signJwtSecret(id, { 
-                expiresIn: '2h',
-            });
-            if (creatModel) { 
-                GenericRes.success(res, 201, 'Successfully registration', { id, username, email, ...req.body, token });
+            //generate jwt
+           const token = await Jwt.access(id);
+
+            if (saveUser) { 
+                GenericRes.success(res, 201, { id, username, email,  token });
             } else { 
                 GenericRes.error(res, 409, 'Fail to connect');
             }

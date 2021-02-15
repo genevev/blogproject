@@ -19,12 +19,5 @@ class GenericRes {
             message
         });
     }
-
-    static err(res, code, message) { 
-        return res.status(code).json({ 
-            status: code,
-            message
-        });
-    }
 }
  export default GenericRes;
