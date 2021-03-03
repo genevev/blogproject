@@ -1,14 +1,17 @@
 import jwt from 'jsonwebtoken';
+import 'dotenv/config';
 
 class Jwt { 
-    static verifyJwt(token) { 
-        const data = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        return data.data;
-    }
+    static access (userExiId) {
 
-    static generateJwt(data = {}, expiersIn = { expiresIn: '2h'}) { 
-        const token = jwt.sign({ data }, process.env.JWT_SECRET_KEY, expiresIn)
-        return token;
-    }
+      const token = jwt.sign({ userExiId: userExiId}, 
+        process.env.SECRET, {
+        expiresIn: "1h",
+      })
+
+      return token;
+
+    };
+
 }
 export default Jwt;
