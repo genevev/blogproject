@@ -5,12 +5,6 @@ import UserController from '../../controllers/userController';
 
 const router = Router();
 
-router.param('username', function(req, res, next, username) {
-    if(username.match(/([a-z]+)/) !== null)
-      next();
-    else
-      next(err);
-  });
 
 router.post('/auth/signup', Validator.userSignup, UserController.signup );
 
