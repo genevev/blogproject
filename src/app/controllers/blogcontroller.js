@@ -23,7 +23,7 @@ class BlogController {
             const {id, createdAt } = blogId;
 
             if(!newBlog) { 
-                GenericRes.error(res, 405, 'Please reconnect to internet');                
+                GenericRes.error(res, 405, 'There is no blog yet');                
             }
             GenericRes.success(res, 201, { id, ...blogModel, createdAt }); 
         } catch (error) { 
