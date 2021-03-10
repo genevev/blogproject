@@ -10,14 +10,15 @@ module.exports = (sequelize, Sequelize) => {
             },
             userId: { 
                 type: Sequelize.INTEGER,
-                allowNull: false
+                allowNull: false,
+               foreignKey: true
             },
             title: { 
-                type: Sequelize.INTEGER,
+                type: Sequelize.STRING,
                 allowNull: false
             },
             description: { 
-                type: Sequelize.INTEGER,
+                type: Sequelize.STRING,
                 allowNull: false
             },
             createdAt: { 
@@ -30,7 +31,7 @@ module.exports = (sequelize, Sequelize) => {
             },
         },
         { 
-            tableName: 'Blog',
+            tableName: 'blog',
         },
         {},
     );

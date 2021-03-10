@@ -3,7 +3,7 @@ module.exports = (sequelize, Sequelize) => {
       'User',
       {
         id: {
-          type: Sequelize.BIGINT(20),
+          type: Sequelize.INTEGER,
           primaryKey: true,
           autoIncrement: true,
           unique: true,
