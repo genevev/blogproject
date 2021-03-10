@@ -7,7 +7,6 @@ class UserService {
         return res;
      }
    
-
     static async userExist(reqUser) { 
         const res = await db.User.findOne({ where: { username: reqUser}});
         return res;
