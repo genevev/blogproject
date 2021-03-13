@@ -12,6 +12,11 @@ class BlogService {
         return res;
     }
 
+    static async getAllBlogById (id) { 
+        const res = await db.Blog.findAllById({ where: { userId: id }});
+        return res;
+    }
+
     static async getOneBlog (reqTitl) { 
         const res = await db.Blog.findOne({ where: { title: reqTitl }});
         return res;
