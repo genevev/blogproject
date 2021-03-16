@@ -21,6 +21,11 @@ class UserService {
         const res = await db.User.findOne({ where: { username: user}});
         return res;
     }
+
+    static async getUserById(userId) {
+        const res = await db.User.findOne({ where: { id: userId } });
+        return res;
+      }
 } 
 
 export default UserService;
