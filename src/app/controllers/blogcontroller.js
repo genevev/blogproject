@@ -9,25 +9,28 @@ class BlogController {
     static async create(req, res, next) { 
     
         try { 
-
             const userId = await ExtractToken.authentication( req, res, next);
             const { title, description } = req.body;
-        
             const blogModel = { 
                 userId, 
                 title, 
                 description 
             };
 
-            const newBlog = await BlogService.createBlog(blogModel);
-            const blogId = await BlogService.getOneBlog(title);
+            const checkExist= await BlogService.getOneBlogByTitle(title);
+            const data = await BlogService.createBlog(blogModel);
 
-            const {id, createdAt } = blogId;
-
-            if(!newBlog) { 
-                GenericRes.error(res, 405, 'There is no blog yet');                
+            if(checkExist){
+              GenericRes.error(res, 401, 'already Exist');
             }
-            GenericRes.success(res, 201, { id, ...blogModel, createdAt }); 
+            
+            if(!data) { 
+              GenericRes.error(res, 405, 'There is no blog yet');                
+            }
+
+           delete data['updatedAt']
+
+            GenericRes.success(res, 201, data); 
         } catch (error) { 
             GenericRes.error(res, 406, error.message);
         }
@@ -44,13 +47,29 @@ class BlogController {
            if (!data) {
             GenericRes.error(res, 404, 'no blog');
           } 
-
            GenericRes.success(res, 200, {username, data} );
-          
-        } catch (error) {
+       } catch (error) {
           GenericRes.error(res, 400, error.message);
         } 
-      } 
+      }
+      
+      static async getOneBlog(req, res, next) { 
+        try { 
+         const userId = await ExtractToken.authentication(req, res, next);
+         const blogId = req.params.post_id;
+         const userData = await UserService.getUserById(userId);
+        const data = await BlogService.getSingleBlog(blogId,  userId);
+
+         const { username } = userData;
+
+         if (!data) { 
+           GenericRes.error(res, 400, 'no blog found');
+         }
+          GenericRes.success(res, 200, {data, username});
+      } catch (error) { 
+          GenericRes.error(res, 404, error.message);
+        } 
+      }
  }
 
  export default BlogController;
