@@ -50,24 +50,27 @@ class UserController {
         try { 
             // if user exst 
             const signinUser = req.body.username;
-            const newuser = await UserService.userSignIn(signinUser);
-            if (newuser) { 
+            const newUser = await UserService.userSignIn(signinUser);
+            if (!newUser) {
+                GenericRes.error(res, 403, 'Invalid user');
+            }
              
 
             // check if the passwd matches
             const password = req.body.password;
-            const matchpass = await Passcode.comparePassw(password, newuser.password);
+            const matchpass = await Passcode.comparePassw(password, newUser.password);
 
-            if (matchpass) { 
-                const { id, username } = newuser;
+            if (!matchpass) { 
+                GenericRes.error(res, 402, 'invalid user');
+            }
+                const { id, username } = newUser;
                 
                 // generate token
                 const token = await Jwt.access(id);
 
                 GenericRes.success(res, 200, { id, username, token });
-            } else { 
+             
                 GenericRes.error(res, 400, 'try again later');
-            }}
         } catch(e) { 
             GenericRes.error(res, 500, e.message);
         }

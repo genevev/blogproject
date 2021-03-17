@@ -5,7 +5,7 @@ import Validator from '../../middlewares/validator';
 const blogRoute = Router();
 
 blogRoute.post('/blog/posts',  Validator.createBlog, BlogController.create );
-
 blogRoute.get('/blog/posts', BlogController.allBlog);
+blogRoute.get('/blog/posts/:post_id', BlogController.getOneBlog);
 
 export default blogRoute;

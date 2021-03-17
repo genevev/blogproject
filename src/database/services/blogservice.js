@@ -12,28 +12,19 @@ class BlogService {
         return res;
     }
 
-    static async getAllBlogById (id) { 
-        const res = await db.Blog.findAllById({ where: { userId: id }});
-        return res;
-    }
-
-    static async getOneBlog (reqTitl) { 
-        const res = await db.Blog.findOne({ where: { title: reqTitl }});
-        return res;
-    }
-
-    static async getSingleBlog (postId) { 
+    static async getOneBlog (postId) { 
         const res = await db.Blog.findOne({ where: { id: postId }});
         return res;
     }
 
-    static async deleteBlog (reqId) { 
-        const res = await db.Blog.destroy({ where: { id: reqId }});
+    static async getOneBlogByTitle (title) { 
+        const res = await db.Blog.findOne({ where: { title }});
         return res;
     }
 
-    static async updateBlog (Blog, postId) { 
-        const res = await db.Blog.update({ where: { id: blogId }});
+    static async getSingleBlog(blog_id, user_id) { 
+        const res = await db.Blog.findOne({ where: {id: blog_id, userId: user_id }});
+        return res;
     }
 }
 

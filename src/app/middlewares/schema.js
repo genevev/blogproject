@@ -9,7 +9,7 @@ const schema = {
     }),
 
     signinUser: joi.object({
-        email: joi.string().email().required(),
+        username: joi.string().required(),
         password: joi.string().max(8).required()    
     }),
 
