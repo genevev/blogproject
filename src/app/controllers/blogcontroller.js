@@ -28,7 +28,7 @@ class BlogController {
               GenericRes.error(res, 405, 'There is no blog yet');                
             }
 
-           delete data['updatedAt']
+           delete data['updatedAt'];
 
             GenericRes.success(res, 201, data); 
         } catch (error) { 
@@ -69,6 +69,27 @@ class BlogController {
       } catch (error) { 
           GenericRes.error(res, 404, error.message);
         } 
+      }
+
+      static async updateBlog(req, res, next) { 
+        try { 
+          const userId = await ExtractToken.authentication(req, res, next);
+          const blogId = req.params.post_id;
+          const { title, description } = req.body;
+          const blogModel = { title, description };
+          
+          const data = await BlogService.updateBlog(blogModel, blogId);
+          
+         if (!data) { 
+           GenericRes.error(res, 400, 'no blog', next);
+         }
+         const data1 = await BlogService.getOneBlog(blogId);
+         const { updatedAt } = data1;
+   
+         GenericRes.success(res, 200, {userId, blogId, updatedAt, ...blogModel});
+        } catch(error) { 
+          GenericRes.error(res, 405, error.message);
+        }
       }
  }
 
