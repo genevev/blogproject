@@ -43,7 +43,7 @@ class BlogController {
          const data = await BlogService.getAllBlog(userId);
 
          const { username } = userData;
-
+          
            if (!data) {
             GenericRes.error(res, 404, 'no blog');
           } 
@@ -62,6 +62,7 @@ class BlogController {
 
          const { username } = userData;
 
+         
          if (!data) { 
            GenericRes.error(res, 400, 'no blog found');
          }
@@ -77,20 +78,42 @@ class BlogController {
           const blogId = req.params.post_id;
           const { title, description } = req.body;
           const blogModel = { title, description };
-          
-          const data = await BlogService.updateBlog(blogModel, blogId);
-          
-         if (!data) { 
-           GenericRes.error(res, 400, 'no blog', next);
-         }
-         const data1 = await BlogService.getOneBlog(blogId);
-         const { updatedAt } = data1;
-   
-         GenericRes.success(res, 200, {userId, blogId, updatedAt, ...blogModel});
-        } catch(error) { 
-          GenericRes.error(res, 405, error.message);
-        }
-      }
- }
 
+          const data = await BlogService.updateBlog(blogModel, blogId);
+         if (!data) { 
+           GenericRes.error(res, 400, 'no blog');
+         }
+        
+         if (data) {
+           const newData = await BlogService.getOneBlog(blogId);
+           GenericRes.success(res, 200, newData);
+        }
+      } catch(error) { 
+        GenericRes.error(res, 404, error.message);
+      }
+}
+
+static async deleteBlog(req, res, next) { 
+  try { 
+    const userId = await ExtractToken.authentication(req, res, next);
+    const blogId = req.params.post_id;
+    const { title, description } = req.body;
+    const blogModel = { title, description};
+
+    const data = await BlogService.deleteBlog(blogId);
+
+    if (!data) { 
+      GenericRes.error(res, 400, 'blog no deleted');
+    }
+
+    if (data) { 
+      const newData = await BlogService.getOneBlog(blogId);
+      GenericRes.success(res, 200,{blogId, userId, blogModel} );
+    }
+
+  } catch(error) { 
+    GenericRes.error(res, 404, error.message);
+  }
+}
+}
  export default BlogController;
