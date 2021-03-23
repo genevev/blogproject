@@ -26,6 +26,16 @@ class BlogService {
         const res = await db.Blog.findOne({ where: {id: blog_id, userId: user_id }});
         return res;
     }
+
+    static async updateBlog(data, blogId) { 
+        const res = await db.Blog.update(data, { where: {id: blogId }});
+        return res;
+    }
+
+    static async deleteBlog(blogId) { 
+        const res = await db.Blog.destroy({ where: { id: blogId }});
+        return res;
+    }
 }
 
 export default BlogService;
